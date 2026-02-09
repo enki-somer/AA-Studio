@@ -103,33 +103,33 @@ export default function JsonVisual({ jsonPath, alt, className = '' }: JsonVisual
   const shouldReduceMotion = prefersReducedMotion();
   const complexity = getComplexityLevel(jsonPath);
 
-  // Get basePath - detect from URL in browser, fallback to env var or default
-  const getBasePath = (): string => {
-    if (typeof window !== 'undefined') {
-      const pathname = window.location.pathname;
-      // If pathname starts with /AA-Studio, use it
-      if (pathname.startsWith('/AA-Studio')) {
-        return '/AA-Studio';
-      }
-    }
-    return process.env.NEXT_PUBLIC_BASE_PATH || '/AA-Studio';
-  };
-  
-  // Ensure jsonPath includes basePath for absolute paths
-  const getFullPath = (path: string): string => {
-    if (!path.startsWith('/')) {
-      return path; // Relative paths don't need basePath
-    }
-    const basePath = getBasePath();
-    // Only prepend basePath if path doesn't already include it
-    if (!path.startsWith(basePath)) {
-      return `${basePath}${path}`;
-    }
-    return path;
-  };
-
   useEffect(() => {
     let isMounted = true;
+
+    // Get basePath - detect from URL in browser, fallback to env var or default
+    const getBasePath = (): string => {
+      if (typeof window !== 'undefined') {
+        const pathname = window.location.pathname;
+        // If pathname starts with /AA-Studio, use it
+        if (pathname.startsWith('/AA-Studio')) {
+          return '/AA-Studio';
+        }
+      }
+      return process.env.NEXT_PUBLIC_BASE_PATH || '/AA-Studio';
+    };
+    
+    // Ensure jsonPath includes basePath for absolute paths
+    const getFullPath = (path: string): string => {
+      if (!path.startsWith('/')) {
+        return path; // Relative paths don't need basePath
+      }
+      const basePath = getBasePath();
+      // Only prepend basePath if path doesn't already include it
+      if (!path.startsWith(basePath)) {
+        return `${basePath}${path}`;
+      }
+      return path;
+    };
 
     const loadAnimation = async () => {
       try {

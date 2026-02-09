@@ -6,7 +6,6 @@ import { prefersReducedMotion } from '@/lib/animations';
 import JsonVisual from './JsonVisual';
 import Image from 'next/image';
 import { Heading2, BodyText, InlineCode } from '@/components/Typography';
-import { getAssetPath } from '@/lib/utils';
 
 interface ScrollRevealCardProps {
   title: string;
@@ -109,7 +108,7 @@ export default function ScrollRevealCard({
             ) : imageSrc ? (
               <div className="w-full h-64 sm:h-72 md:h-80 lg:h-96 rounded-lg glass elevation-2 p-2 sm:p-3 md:p-4 overflow-hidden flex items-center justify-center">
                 <Image
-                  src={getAssetPath(imageSrc)}
+                  src={imageSrc}
                   alt={`${title} visualization`}
                   width={800}
                   height={600}

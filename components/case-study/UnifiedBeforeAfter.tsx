@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Heading2 } from '@/components/Typography';
 import { fastTransition, prefersReducedMotion } from '@/lib/animations';
-import { getAssetPath } from '@/lib/utils';
 
 export default function UnifiedBeforeAfter() {
   const [view, setView] = useState<'before' | 'after'>('before');
@@ -60,7 +59,7 @@ export default function UnifiedBeforeAfter() {
           >
             <div className="relative w-full aspect-[1278/540]">
               <Image
-                src={getAssetPath(`/BPMN/${view}.svg`)}
+                src={`/BPMN/${view}.svg`}
                 alt={view === 'before' ? 'Default BPMN diagram' : 'Enhanced BPMN diagram with all plugins'}
                 fill
                 className="object-contain"

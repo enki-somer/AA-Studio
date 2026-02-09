@@ -35,3 +35,7 @@ yarn-error.log*
 next-env.d.ts
 PR.md
 README.md
+
+# resume files
+resume.html
+resume-md.md

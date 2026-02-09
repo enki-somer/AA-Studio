@@ -1,6 +1,5 @@
 import Section from '@/components/Section';
 import CaseStudyCard from '@/components/CaseStudyCard';
-import { getAssetPath } from '@/lib/utils';
 
 const caseStudies = [
   {
@@ -10,9 +9,9 @@ const caseStudies = [
       'Comprehensive BPMN.js extension suite with 3 custom plugins covering visual enhancement, UX improvements, and advanced rendering. Features jump effect for crossing connections, BPMN 2.0 color management, and resizable tasks. Includes PR contribution to camunda-modeler.',
     technologies: ['JavaScript ES6+', 'BPMN.js', 'SVG', 'diagram-js', 'Event-Driven Architecture'],
     techStack: [
-      { name: 'JavaScript', icon: getAssetPath('/icons/node.jpg') },
-      { name: 'BPMN.js', icon: getAssetPath('/icons/icon.png')},
-      { name: 'SVG', icon: getAssetPath('/icons/js.jpg')},
+      { name: 'JavaScript', icon: '/icons/node.jpg' },
+      { name: 'BPMN.js', icon: '/icons/icon.png'},
+      { name: 'SVG', icon: '/icons/js.jpg'},
     ],
     metrics: [
       { label: 'Plugins', value: '3' },
@@ -26,9 +25,9 @@ const caseStudies = [
       'Architected a production property management system serving tenants, owners, and administrators through dedicated mobile apps and web dashboard. Evolved from Next.js PWA to Flutter multi-app architecture with unified Node.js backend.',
     technologies: ['Flutter', 'Next.js', 'Node.js', 'PostgreSQL'],
     techStack: [
-      { name: 'Next.js', icon: getAssetPath('/icons/nextjs.png')},
-      { name: 'Node.js', icon: getAssetPath('/icons/node.jpg')},
-      { name: 'Flutter', icon: getAssetPath('/icons/flutter.jpg') },
+      { name: 'Next.js', icon: '/icons/nextjs.png'},
+      { name: 'Node.js', icon: '/icons/node.jpg'},
+      { name: 'Flutter', icon: '/icons/flutter.jpg' },
     ],
     metrics: [
       { label: 'uptime', value: '99.9%' },
@@ -42,9 +41,9 @@ const caseStudies = [
       'Project-centric ERP system for construction companies with multi-role access, offline PWA capabilities, and real-time financial tracking. Manages projects, contractors, invoices, payroll, and cash flow with ACID guarantees.',
     technologies: ['Next.js 15', 'Node.js', 'PostgreSQL', 'TypeScript', 'PWA'],
     techStack: [
-      { name: 'Node.js', icon: getAssetPath('/icons/node.jpg') },
-      { name: 'PostgreSQL', icon: getAssetPath('/icons/pwa-banner.png') },
-      { name: 'Next.js', icon: getAssetPath('/icons/nextjs.jpeg') },
+      { name: 'Node.js', icon: '/icons/node.jpg' },
+      { name: 'PostgreSQL', icon: '/icons/pwa-banner.png' },
+      { name: 'Next.js', icon: '/icons/nextjs.jpeg' },
     ],
     metrics: [
       { label: 'user roles', value: '3' },
