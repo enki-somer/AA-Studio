@@ -13,7 +13,7 @@ const contributionCards = [
     description:
       'Contributed to BPMN workflow orchestration platform for business process automation. Designed and implemented complex multi-step processes with conditional branching, error handling, and rollback mechanisms. Built custom extensions and monitoring tools for process visibility.',
     tags: ['Camunda', 'BPMN', 'Workflow', 'Automation', 'XML', 'React'],
-    image: getAssetPath('/BPMN/camu.png'),
+    image: getAssetPath('/BPMN/Camu.png'),
     visualPosition: 'right' as const,
     animationStyle: 'blur' as const,
   },
