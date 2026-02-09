@@ -7,7 +7,6 @@ import ErrorSuppressor from '@/components/ErrorSuppressor';
 export const metadata: Metadata = {
   title: 'AA Studio',
   description: 'Senior full-stack and Systems engineer',
-  metadataBase: new URL('https://aa-studio.io'),
 };
 
 export default function RootLayout({

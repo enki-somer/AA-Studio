@@ -44,12 +44,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './out'
-      
-      - name: Copy CNAME to out directory
-        run: |
-          if [ -f public/CNAME ]; then
-            cp public/CNAME out/CNAME
-          fi
 
       - name: Deploy to GitHub Pages
         id: deployment
