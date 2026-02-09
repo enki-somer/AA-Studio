@@ -1,18 +1,14 @@
 import { notFound } from 'next/navigation';
 import { serialize } from 'next-mdx-remote/serialize';
-import { getCaseStudyContent, getAllCaseStudySlugs } from '@/lib/utils';
+import { getCaseStudyContent } from '@/lib/utils';
 import Section from '@/components/Section';
 import CaseStudyContent from '@/components/case-studies/CaseStudyContent';
 
 export async function generateStaticParams() {
-  const slugs = getAllCaseStudySlugs();
-  // Exclude MDX pages with complex JSX props that can't be serialized during static export
-  // Exclude slugs that have dedicated static route pages (no MDX); [slug] would 404 for them
-  const staticSlugs = slugs.filter(
-    (slug) =>
-      !['automation-pipeline', 'data-quality-system', 'property-management-platform'].includes(slug)
-  );
-  return staticSlugs.map((slug) => ({ slug }));
+  // Only build placeholder so this dynamic route is valid for static export.
+  // Dedicated static pages: property-management-platform, camunda-jump-effect, erp-financial-system.
+  // MDX slugs automation-pipeline, data-quality-system fail prerender (undefined component in MDX).
+  return [{ slug: '__static_export_placeholder' }];
 }
 
 export default async function CaseStudyPage({
