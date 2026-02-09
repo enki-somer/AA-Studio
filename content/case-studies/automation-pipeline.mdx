@@ -1,0 +1,146 @@
+# Document Processing Automation
+
+<ViewToggle
+  problem={
+    <>
+      <p>
+        A financial services company processes thousands of invoices, contracts, and reports monthly. Manual data entry was time-consuming, error-prone, and required multiple staff members. The company needed to extract structured data from unstructured documents and integrate it into their ERP system.
+      </p>
+    </>
+  }
+  constraints={
+    <>
+      <ul className="space-y-2 list-disc list-inside">
+        <li><strong>Accuracy</strong>: Data extraction must be 95%+ accurate</li>
+        <li><strong>Volume</strong>: Process 5,000+ documents monthly</li>
+        <li><strong>Format variety</strong>: Documents come in PDF, scanned images, and various formats</li>
+        <li><strong>Integration</strong>: Extracted data must integrate with existing PostgreSQL database</li>
+        <li><strong>Validation</strong>: Business rules must validate extracted data before import</li>
+      </ul>
+    </>
+  }
+  solution={
+    <>
+      <p>
+        Built an AI-powered document processing pipeline using Python, LLM APIs, and PostgreSQL. The system uses large language models to extract structured data from unstructured documents, then validates and imports the data into the ERP system.
+      </p>
+    </>
+  }
+  outcome={
+    <>
+      <p>
+        The system processes 5,000+ documents monthly with 96% accuracy. Manual data entry time reduced by 80%, and data quality improved through automated validation. Documents that fail validation are flagged for manual review, ensuring no data is lost.
+      </p>
+    </>
+  }
+/>
+
+## Document Processing Pipeline
+
+<SystemFlow
+  steps={[
+    {
+      title: 'Document Ingestion',
+      description: 'Documents are uploaded via API or email. The system accepts PDFs, scanned images, and various formats.',
+    },
+    {
+      title: 'Text Extraction',
+      description: 'PDFs are parsed using libraries like PyPDF2, and images are processed through OCR (Optical Character Recognition) to extract text.',
+    },
+    {
+      title: 'Data Extraction',
+      description: 'LLM extracts structured data from the extracted text using carefully engineered prompts with few-shot examples.',
+    },
+    {
+      title: 'Validation',
+      description: 'Business rules validate extracted data to ensure accuracy and completeness before import.',
+    },
+    {
+      title: 'Import',
+      description: 'Valid data is imported into PostgreSQL, integrated with the existing ERP system.',
+    },
+  ]}
+/>
+
+## LLM Integration
+
+Large language models are used for data extraction. The key is prompt engineering: clear instructions, few-shot examples, and structured output:
+
+```python
+def extract_invoice_data(document_text: str) -> dict:
+    prompt = f"""
+    Extract invoice data from the following text. Return JSON with these fields:
+    - invoice_number: string
+    - date: YYYY-MM-DD
+    - total_amount: decimal
+    - vendor_name: string
+    - line_items: array of {{description, quantity, unit_price, total}}
+    
+    Text:
+    {document_text}
+    """
+    
+    response = llm_client.complete(
+        prompt=prompt,
+        temperature=0,  # Deterministic output
+        response_format="json"
+    )
+    
+    return json.loads(response)
+```
+
+<DecisionPoint
+  question="Why use LLMs instead of traditional parsing or regex?"
+  answer="LLMs can handle unstructured documents with varying formats, layouts, and languages. They understand context and can extract data even when the format is inconsistent, which is common in real-world documents."
+  rationale="Traditional parsing works well for consistent formats but fails when documents vary. LLMs provide flexibility at the cost of latency and API costs, but the accuracy and adaptability justify the trade-off for this use case."
+/>
+
+## Validation Rules
+
+Extracted data is validated against business rules before import:
+
+```python
+def validate_invoice_data(data: dict) -> tuple[bool, list[str]]:
+    errors = []
+    
+    if not data.get('invoice_number'):
+        errors.append('Missing invoice number')
+    
+    if data.get('total_amount', 0) <= 0:
+        errors.append('Invalid total amount')
+    
+    # Validate line items sum matches total
+    line_items_total = sum(item['total'] for item in data.get('line_items', []))
+    if abs(line_items_total - data['total_amount']) > 0.01:
+        errors.append('Line items total does not match invoice total')
+    
+    return len(errors) == 0, errors
+```
+
+## Error Handling
+
+When extraction fails or validation errors occur, the system logs the issue and notifies administrators:
+
+```python
+try:
+    extracted_data = extract_invoice_data(document_text)
+    is_valid, errors = validate_invoice_data(extracted_data)
+    
+    if is_valid:
+        import_to_database(extracted_data)
+    else:
+        log_validation_errors(document_id, errors)
+        notify_administrators(document_id, errors)
+except Exception as e:
+    log_extraction_error(document_id, str(e))
+    queue_for_manual_review(document_id)
+```
+
+<Callout type="note" title="Trade-offs">
+  <ul className="space-y-2">
+    <li><strong>LLM costs</strong>: Higher processing costs but significant time savings</li>
+    <li><strong>Accuracy</strong>: 96% accuracy means 4% require manual review</li>
+    <li><strong>Latency</strong>: LLM API calls add 2-5 seconds per document</li>
+    <li><strong>Maintenance</strong>: Prompt engineering requires ongoing refinement</li>
+  </ul>
+</Callout>

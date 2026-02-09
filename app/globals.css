@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Color System */
+    --color-primary: #22D3EE;
+    --color-accent: #22D3EE;
+    --color-accent-muted: #64748B;
+    --color-base-light: #FFFFFF;
+    --color-base-dark: #0E0F16;
+    --color-text-light: #0A0A0A;
+    --color-text-dark: #FAFAFA;
+    
+    /* Elevation System - Shadows */
+    --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    
+    /* Dark mode shadows */
+    --shadow-subtle-dark: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-sm-dark: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+    --shadow-md-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    --shadow-lg-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+    --shadow-xl-dark: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+    
+    /* Borders */
+    --border-subtle: 1px solid rgba(100, 116, 139, 0.1);
+    --border-muted: 1px solid rgba(100, 116, 139, 0.2);
+    --border-accent: 1px solid rgba(34, 211, 238, 0.4);
+    
+    /* Glass/Blur Effects */
+    --blur-sm: blur(4px);
+    --blur-md: blur(8px);
+    --blur-lg: blur(16px);
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-bg-dark: rgba(14, 15, 22, 0.85);
+    
+    /* Spacing for elevation */
+    --elevation-1: 1px;
+    --elevation-2: 2px;
+    --elevation-4: 4px;
+    --elevation-8: 8px;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-base-light text-text-light font-sans antialiased;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: radial-gradient(ellipse at bottom center, #191E28 0%, #0E0F16 100%);
+      background-attachment: fixed;
+      @apply text-text-dark font-sans antialiased;
+    }
+  }
+
+  /* Code block styling */
+  pre {
+    @apply overflow-x-auto;
+  }
+
+  code {
+    @apply font-mono;
+  }
+
+  /* Enhanced link styling */
+  a:not([class]) {
+    @apply text-accent hover:text-accent hover:underline underline-offset-2 transition-all duration-200 ease-out;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    a:not([class]) {
+      @apply text-accent hover:text-accent;
+    }
+  }
+
+  /* Smooth transitions - respect reduced motion */
+  * {
+    @apply transition-colors duration-200 ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Elevation utilities */
+  .elevation-1 {
+    box-shadow: var(--shadow-subtle);
+    transform: translateY(0);
+  }
+  
+  .elevation-2 {
+    box-shadow: var(--shadow-sm);
+    transform: translateY(0);
+  }
+  
+  .elevation-3 {
+    box-shadow: var(--shadow-md);
+    transform: translateY(0);
+  }
+  
+  .elevation-4 {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(0);
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .elevation-1 {
+      box-shadow: var(--shadow-subtle-dark);
+    }
+    
+    .elevation-2 {
+      box-shadow: var(--shadow-sm-dark);
+    }
+    
+    .elevation-3 {
+      box-shadow: var(--shadow-md-dark);
+    }
+    
+    .elevation-4 {
+      box-shadow: var(--shadow-lg-dark);
+    }
+  }
+  
+  /* Glass effect */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--blur-md);
+    -webkit-backdrop-filter: var(--blur-md);
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .glass {
+      background: var(--glass-bg-dark);
+    }
+  }
+  
+  /* Tech Stack Cards - Solitaire Fan Effect */
+  .tech-card-0 {
+    transform: rotate(0deg) translateY(0px) scale(0);
+    opacity: 0;
+  }
+  
+  .tech-card-1 {
+    transform: rotate(0deg) translateY(0px) scale(0);
+    opacity: 0;
+  }
+  
+  .tech-card-2 {
+    transform: rotate(0deg) translateY(0px) scale(0);
+    opacity: 0;
+  }
+  
+  .group:hover .tech-card-0 {
+    transform: rotate(-20deg) translateY(-15px) translateX(-25px) scale(1);
+    opacity: 1;
+  }
+  
+  .group:hover .tech-card-1 {
+    transform: rotate(0deg) translateY(-35px) scale(1);
+    opacity: 1;
+  }
+  
+  .group:hover .tech-card-2 {
+    transform: rotate(20deg) translateY(-15px) translateX(25px) scale(1);
+    opacity: 1;
+  }
+}

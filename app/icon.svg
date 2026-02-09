@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Rounded square container with dark background -->
+  <rect x="2" y="2" width="60" height="60" rx="8" ry="8" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/>
+  
+  <!-- AA Monogram: Two A's sharing a central vertical stroke -->
+  <!-- Left A: left diagonal, crossbar -->
+  <path d="M 20 45 L 28 20" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 22 36 L 30 36" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+  
+  <!-- Shared central stroke (right leg of left A, left leg of right A) -->
+  <path d="M 32 20 L 32 45" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+  
+  <!-- Right A: right diagonal, crossbar -->
+  <path d="M 32 20 L 44 45" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 34 36 L 42 36" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

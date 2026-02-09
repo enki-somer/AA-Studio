@@ -1,0 +1,193 @@
+# Data Quality and Monitoring System
+
+<ViewToggle
+  problem={
+    <>
+      <p>
+        A data analytics company ingests millions of records daily from multiple sources. Data quality issues—missing values, outliers, schema violations—were discovered too late, after they had propagated through downstream systems and reports. The company needed to catch data quality issues early and maintain data lineage.
+      </p>
+    </>
+  }
+  constraints={
+    <>
+      <ul className="space-y-2 list-disc list-inside">
+        <li><strong>Volume</strong>: Process 10+ million records daily</li>
+        <li><strong>Latency</strong>: Data quality checks must complete within minutes</li>
+        <li><strong>Lineage</strong>: Track data from source to final reports</li>
+        <li><strong>Alerting</strong>: Notify stakeholders when quality issues are detected</li>
+        <li><strong>Quarantine</strong>: Optionally quarantine bad data without stopping pipeline</li>
+      </ul>
+    </>
+  }
+  solution={
+    <>
+      <p>
+        Built a data quality pipeline using Python, PostgreSQL, and Tableau. The system validates data at ingestion, flags anomalies, maintains data lineage, and provides real-time monitoring dashboards.
+      </p>
+    </>
+  }
+  outcome={
+    <>
+      <p>
+        The system processes 10+ million records daily and catches 99% of data quality issues before they reach downstream systems. Data lineage tracking enables quick root cause analysis when issues are discovered. Monitoring dashboards provide real-time visibility into data quality metrics.
+      </p>
+    </>
+  }
+/>
+
+## Data Quality Checks
+
+The pipeline runs multiple validation checks on each batch of data:
+
+```python
+class DataQualityChecker:
+    def check_missing_values(self, df: pd.DataFrame, required_columns: list) -> list:
+        """Check for missing values in required columns"""
+        errors = []
+        for col in required_columns:
+            missing_count = df[col].isna().sum()
+            if missing_count > 0:
+                errors.append(f"Column {col}: {missing_count} missing values")
+        return errors
+    
+    def check_outliers(self, df: pd.DataFrame, column: str, threshold: float = 3) -> list:
+        """Check for statistical outliers using z-score"""
+        z_scores = np.abs(stats.zscore(df[column].dropna()))
+        outliers = df[z_scores > threshold]
+        if len(outliers) > 0:
+            return [f"Found {len(outliers)} outliers in {column}"]
+        return []
+    
+    def check_schema(self, df: pd.DataFrame, expected_schema: dict) -> list:
+        """Validate DataFrame schema matches expected schema"""
+        errors = []
+        for col, dtype in expected_schema.items():
+            if col not in df.columns:
+                errors.append(f"Missing column: {col}")
+            elif df[col].dtype != dtype:
+                errors.append(f"Column {col}: expected {dtype}, got {df[col].dtype}")
+        return errors
+```
+
+<DataFlow
+  nodes={[
+    { id: 'source', label: 'Data Sources', description: 'Multiple sources' },
+    { id: 'ingestion', label: 'Ingestion', description: 'Batch processing' },
+    { id: 'validation', label: 'Quality Checks', description: 'Multi-stage validation' },
+    { id: 'quarantine', label: 'Quarantine', description: 'Bad data isolation' },
+    { id: 'storage', label: 'Storage', description: 'PostgreSQL' },
+    { id: 'reports', label: 'Reports', description: 'Tableau dashboards' },
+  ]}
+  edges={[
+    { from: 'source', to: 'ingestion' },
+    { from: 'ingestion', to: 'validation' },
+    { from: 'validation', to: 'quarantine', label: 'Failed' },
+    { from: 'validation', to: 'storage', label: 'Passed' },
+    { from: 'storage', to: 'reports' },
+  ]}
+/>
+
+## Data Lineage Tracking
+
+Every data transformation is logged to maintain lineage:
+
+```python
+class DataLineage:
+    def log_transformation(self, source_table: str, target_table: str, 
+                          transformation: str, record_count: int):
+        """Log a data transformation for lineage tracking"""
+        db.execute("""
+            INSERT INTO data_lineage 
+            (source_table, target_table, transformation, record_count, timestamp)
+            VALUES ($1, $2, $3, $4, NOW())
+        """, [source_table, target_table, transformation, record_count])
+    
+    def get_lineage(self, table_name: str) -> list:
+        """Get full lineage for a table"""
+        return db.query("""
+            WITH RECURSIVE lineage AS (
+                SELECT source_table, target_table, transformation, 1 as depth
+                FROM data_lineage
+                WHERE target_table = $1
+                UNION ALL
+                SELECT l.source_table, l.target_table, l.transformation, lineage.depth + 1
+                FROM data_lineage l
+                JOIN lineage ON l.target_table = lineage.source_table
+            )
+            SELECT * FROM lineage ORDER BY depth
+        """, [table_name])
+```
+
+<DecisionPoint
+  question="Why track lineage at the database level instead of using a dedicated tool?"
+  answer="Database-level tracking provides tight integration with the data pipeline and enables SQL-based queries for lineage analysis."
+  rationale="Dedicated tools like Apache Atlas provide more features but add complexity. For this use case, recursive SQL queries provide sufficient lineage tracking with minimal operational overhead."
+/>
+
+## Monitoring Dashboard
+
+Tableau dashboards provide real-time visibility into data quality:
+
+- **Quality metrics**: Pass/fail rates by check type
+- **Error trends**: Quality issues over time
+- **Source analysis**: Quality by data source
+- **Lineage visualization**: Data flow from source to reports
+
+## Quarantine System
+
+When quality issues are detected, data can be quarantined:
+
+```python
+def quarantine_bad_data(batch_id: str, errors: list):
+    """Move bad data to quarantine table"""
+    db.execute("""
+        INSERT INTO data_quarantine
+        SELECT * FROM staging_data WHERE batch_id = $1
+    """, [batch_id])
+    
+    db.execute("""
+        INSERT INTO quarantine_log
+        (batch_id, errors, timestamp)
+        VALUES ($1, $2, NOW())
+    """, [batch_id, json.dumps(errors)])
+    
+    notify_stakeholders(batch_id, errors)
+```
+
+<BeforeAfter
+  before={{
+    title: 'Before',
+    content: (
+      <>
+        <ul className="space-y-2 list-disc list-inside">
+          <li>Data quality issues discovered days or weeks after ingestion</li>
+          <li>No way to trace data back to source when issues found</li>
+          <li>Manual investigation required for each quality issue</li>
+          <li>Downstream systems affected by bad data</li>
+        </ul>
+      </>
+    ),
+  }}
+  after={{
+    title: 'After',
+    content: (
+      <>
+        <ul className="space-y-2 list-disc list-inside">
+          <li>99% of issues caught at ingestion within minutes</li>
+          <li>Complete data lineage from source to reports</li>
+          <li>Automated alerts and quarantine system</li>
+          <li>Downstream systems protected from bad data</li>
+        </ul>
+      </>
+    ),
+  }}
+/>
+
+<Callout type="note" title="Trade-offs">
+  <ul className="space-y-2">
+    <li><strong>Processing overhead</strong>: Quality checks add 10-15% processing time</li>
+    <li><strong>Storage</strong>: Lineage tracking requires additional storage</li>
+    <li><strong>Complexity</strong>: More moving parts to maintain</li>
+    <li><strong>False positives</strong>: Some valid data may be flagged as outliers</li>
+  </ul>
+</Callout>
