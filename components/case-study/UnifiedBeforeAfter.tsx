@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { getAssetPath } from '@/lib/assetPath';
 import { Heading2 } from '@/components/Typography';
 import { fastTransition, prefersReducedMotion } from '@/lib/animations';
 
@@ -59,7 +60,7 @@ export default function UnifiedBeforeAfter() {
           >
             <div className="relative w-full aspect-[1278/540]">
               <Image
-                src={`/BPMN/${view}.svg`}
+                src={getAssetPath(`/BPMN/${view}.svg`)}
                 alt={view === 'before' ? 'Default BPMN diagram' : 'Enhanced BPMN diagram with all plugins'}
                 fill
                 className="object-contain"

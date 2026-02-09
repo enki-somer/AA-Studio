@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { prefersReducedMotion } from '@/lib/animations';
 import { Heading2, BodyText } from '@/components/Typography';
+import { getAssetPath } from '@/lib/assetPath';
 import ScrollRevealCard from '../ScrollRevealCard';
 
 const contributionCards = [
@@ -12,7 +13,7 @@ const contributionCards = [
     description:
       'Contributed to BPMN workflow orchestration platform for business process automation. Designed and implemented complex multi-step processes with conditional branching, error handling, and rollback mechanisms. Built custom extensions and monitoring tools for process visibility.',
     tags: ['Camunda', 'BPMN', 'Workflow', 'Automation', 'XML', 'React'],
-    image: '/BPMN/camu.png',
+    image: getAssetPath('/BPMN/camu.png'),
     visualPosition: 'right' as const,
     animationStyle: 'blur' as const,
   },
@@ -22,7 +23,7 @@ const contributionCards = [
     description:
       'Fixed bugs and optimized performance in open source projects. Refactored legacy code, improved test coverage, and reduced technical debt. Contributed documentation, code reviews, and community support to help maintain sustainable codebases.',
     tags: ['Open Source', 'Bug Fixes', 'Performance', 'Refactoring'],
-    image: '/BPMN/cont.jpg',
+    image: getAssetPath('/BPMN/cont.jpg'),
     visualPosition: 'left' as const,
     animationStyle: 'rotate' as const,
   },

@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { getAssetPath } from '@/lib/assetPath';
 
 interface TechStackItem {
   name: string;
@@ -41,7 +42,7 @@ export default function TechStackCards({ techStack }: TechStackCardsProps) {
           >
             <div className="relative w-10 h-10">
               <Image
-                src={tech.icon}
+                src={getAssetPath(tech.icon)}
                 alt={`${tech.name} icon`}
                 fill
                 className="object-contain"
