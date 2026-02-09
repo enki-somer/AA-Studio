@@ -68,7 +68,7 @@ export default function ImplementationTabs() {
               ))}
 
               {/* Code excerpts */}
-              {'codeSnippets' in tab.content &&
+              {tab.content.codeSnippets &&
                 tab.content.codeSnippets.map((snippet, index) => (
                   <CodeExcerpt
                     key={index}
@@ -79,7 +79,7 @@ export default function ImplementationTabs() {
                 ))}
 
               {/* Verification steps */}
-              {tab.value === 'verification' && 'steps' in tab.content && (
+              {tab.value === 'verification' && tab.content.steps && (
                 <div className="mt-6">
                   <div className="text-small font-semibold text-text-light/60 dark:text-text-dark/60 mb-3">
                     Verification Steps:

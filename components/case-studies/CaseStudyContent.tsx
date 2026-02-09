@@ -21,6 +21,8 @@ export default function CaseStudyContent({ content }: CaseStudyContentProps) {
   const [activeHeading, setActiveHeading] = useState<string>('');
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const headingElements = document.querySelectorAll('h2, h3');
     const headingData = Array.from(headingElements).map((el) => {
       const id = el.id || el.textContent?.toLowerCase().replace(/\s+/g, '-') || '';

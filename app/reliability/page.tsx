@@ -65,7 +65,7 @@ export default function Reliability() {
           className="max-w-content mx-auto"
         >
           <BodyText className="text-lg leading-relaxed">
-            Reliability isn't an afterthought—it's a discipline that shapes architecture from day one. Through comprehensive testing strategies, systematic performance optimization, automated deployment pipelines, and observability-first design, I build systems that provide confidence through measurable quality. When failures happen (and they will), well-engineered systems degrade gracefully and provide clear diagnostic paths for rapid recovery.
+            Reliability isn&apos;t an afterthought—it&apos;s a discipline that shapes architecture from day one. Through comprehensive testing strategies, systematic performance optimization, automated deployment pipelines, and observability-first design, I build systems that provide confidence through measurable quality. When failures happen (and they will), well-engineered systems degrade gracefully and provide clear diagnostic paths for rapid recovery.
           </BodyText>
         </motion.div>
 

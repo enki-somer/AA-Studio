@@ -6,7 +6,12 @@ import CaseStudyContent from '@/components/case-studies/CaseStudyContent';
 
 export async function generateStaticParams() {
   const slugs = getAllCaseStudySlugs();
-  return slugs.map((slug) => ({ slug }));
+  // Exclude MDX pages with complex JSX props that can't be serialized during static export
+  // These pages use JSX expressions in props which next-mdx-remote can't serialize statically
+  const staticSlugs = slugs.filter(
+    (slug) => !['automation-pipeline', 'data-quality-system'].includes(slug)
+  );
+  return staticSlugs.map((slug) => ({ slug }));
 }
 
 export default async function CaseStudyPage({
@@ -21,9 +26,11 @@ export default async function CaseStudyPage({
   }
 
   const mdxSource = await serialize(content, {
+    parseFrontmatter: true,
     mdxOptions: {
       remarkPlugins: [],
       rehypePlugins: [],
+      development: false,
     },
   });
 

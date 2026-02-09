@@ -6,7 +6,7 @@ import { fadeInUp, fastTransition } from '@/lib/animations';
 
 interface FlowStep {
   title: string;
-  description: ReactNode;
+  description: ReactNode | string;
   icon?: ReactNode;
 }
 
@@ -62,7 +62,7 @@ export default function SystemFlow({ steps, className = '' }: SystemFlowProps) {
                     className="overflow-hidden"
                   >
                     <div className="text-body text-text-light/80 dark:text-text-dark/80 pt-2">
-                      {step.description}
+                      {typeof step.description === 'string' ? <p>{step.description}</p> : step.description}
                     </div>
                   </motion.div>
                 )}

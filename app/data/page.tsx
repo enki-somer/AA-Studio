@@ -90,7 +90,7 @@ export default function Data() {
           className="max-w-content mx-auto"
         >
           <BodyText className="text-lg leading-relaxed">
-            Data is only valuable when it's accurate, accessible, and actionable. I design systems with data as a first-class concern: normalized schemas for integrity, automated quality pipelines for reliability, and optimized storage for analytics performance. Applications are built to generate analytics-ready data from day one, enabling organizations to transition from operational usage to strategic insights without costly redesign phases.
+            Data is only valuable when it&apos;s accurate, accessible, and actionable. I design systems with data as a first-class concern: normalized schemas for integrity, automated quality pipelines for reliability, and optimized storage for analytics performance. Applications are built to generate analytics-ready data from day one, enabling organizations to transition from operational usage to strategic insights without costly redesign phases.
           </BodyText>
         </motion.div>
 
@@ -122,7 +122,7 @@ export default function Data() {
             <div className="space-y-4">
               <Heading2>Data Quality Pipelines</Heading2>
               <BodyText className="leading-relaxed text-text-light/90 dark:text-text-dark/90">
-                Data quality isn't validated once—it's a continuous process. Automated pipelines check incoming data at ingestion, flag anomalies using statistical profiling, and maintain complete data lineage for debugging and compliance.
+                Data quality isn&apos;t validated once—it&apos;s a continuous process. Automated pipelines check incoming data at ingestion, flag anomalies using statistical profiling, and maintain complete data lineage for debugging and compliance.
               </BodyText>
               <BodyText className="leading-relaxed text-text-light/90 dark:text-text-dark/90">
                 Python scripts run validation rules: null checks, referential integrity, business constraints, and outlier detection. When issues are detected, the system logs detailed diagnostics, notifies stakeholders via alerts, and quarantines problematic data to prevent downstream contamination.
@@ -163,7 +163,7 @@ export default function Data() {
             <div className="order-1 md:order-2 space-y-4">
               <Heading2>Analytics & Reporting Tools</Heading2>
               <BodyText className="leading-relaxed text-text-light/90 dark:text-text-dark/90">
-                Tableau and Power BI are powerful visualization platforms, but they're only as effective as the data infrastructure beneath them. I build the data warehouses, ETL pipelines, and APIs that these tools consume.
+                Tableau and Power BI are powerful visualization platforms, but they&apos;re only as effective as the data infrastructure beneath them. I build the data warehouses, ETL pipelines, and APIs that these tools consume.
               </BodyText>
               <BodyText className="leading-relaxed text-text-light/90 dark:text-text-dark/90">
                 The engineering work involves designing star schemas for efficient querying, optimizing SQL for large datasets, and ensuring data freshness through scheduled pipelines. Python scripts automate transformations, handle edge cases, and maintain quality.

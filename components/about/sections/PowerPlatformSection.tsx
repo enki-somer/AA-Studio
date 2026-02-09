@@ -43,7 +43,7 @@ export default function PowerPlatformSection() {
         >
           <Heading2 className="mb-4">Power Platform & MS365</Heading2>
           <BodyText className="text-text-light/70 dark:text-text-dark/70 max-w-2xl mx-auto">
-            Rapid application development and workflow automation using Microsoft's low-code platform
+            Rapid application development and workflow automation using Microsoft&apos;s low-code platform
           </BodyText>
         </motion.div>
 

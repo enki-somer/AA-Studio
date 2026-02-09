@@ -37,6 +37,16 @@ export interface ArchitectureSection {
   }>;
 }
 
+export interface ImplementationContent {
+  text: string[];
+  codeSnippets?: Array<{
+    language: string;
+    code: string;
+    description?: string;
+  }>;
+  steps?: string[];
+}
+
 export interface CamundaJumpEffectContent {
   hero: {
     title: string;
@@ -61,6 +71,12 @@ export interface CamundaJumpEffectContent {
     why: string;
     tradeOff: string;
   }>;
+  implementation: {
+    overview: ImplementationContent;
+    implementation: ImplementationContent;
+    lifecycle: ImplementationContent;
+    verification: ImplementationContent;
+  };
   whatILearned: string[];
   communityContribution: string;
   skillsUnlocked: string[];
@@ -363,7 +379,7 @@ function applyStandardColor(element, gfx) {
     {
       title: 'CSS for base styling, JS for dynamics',
       why: 'CSS handles static visual properties (colors, borders) efficiently, while JavaScript manages dynamic behaviors (resize handles, intersection detection) that require computation.',
-      tradeOff: 'Split approach adds complexity but leverages each technology\'s strengths: CSS performance for static styles, JS flexibility for dynamic features.',
+      tradeOff: 'Split approach adds complexity but leverages each technology&apos;s strengths: CSS performance for static styles, JS flexibility for dynamic features.',
     },
     {
       title: 'One plugin per concern',
@@ -377,10 +393,56 @@ function applyStandardColor(element, gfx) {
     },
     {
       title: 'Aggressive performance optimization',
-      why: 'Debouncing, RAF batching, and caching ensure plugins don\'t degrade diagram interaction quality even with complex features like intersection detection.',
+      why: 'Debouncing, RAF batching, and caching ensure plugins don&apos;t degrade diagram interaction quality even with complex features like intersection detection.',
       tradeOff: 'Additional code complexity for optimization logic, but essential for maintaining 60fps and responsive user experience.',
     },
   ],
+  implementation: {
+    overview: {
+      text: [
+        'The Camunda BPMN plugin suite extends the core BPMN.js rendering engine with visual enhancements, UX improvements, and workflow optimizations.',
+        'Each plugin follows a consistent architecture pattern: event-driven initialization, handler override for rendering, and lifecycle-aware cleanup.',
+      ],
+    },
+    implementation: {
+      text: [
+        'Plugins integrate with BPMN.js through the EventBus, subscribing to diagram lifecycle events and overriding renderer handlers when needed.',
+        'The handler override pattern preserves original functionality while adding enhancements, ensuring compatibility with core BPMN.js features.',
+      ],
+      codeSnippets: [
+        {
+          language: 'javascript',
+          code: `// Handler override pattern
+this._originalHandler = this.handlers["bpmn:SequenceFlow"];
+this.handlers["bpmn:SequenceFlow"] = (parentGfx, element, attrs) => {
+  // Custom logic here
+  return this._originalHandler(parentGfx, element, attrs);
+};`,
+          description: 'Preserving original handlers for graceful fallback',
+        },
+      ],
+    },
+    lifecycle: {
+      text: [
+        'Plugins activate after diagram import completes, ensuring all elements are available before applying enhancements.',
+        'During editing, plugins respond to element changes and connection updates, maintaining visual consistency.',
+        'Cleanup occurs on diagram clear or element removal to prevent memory leaks and stale references.',
+      ],
+    },
+    verification: {
+      text: [
+        'Each plugin includes comprehensive test coverage for core functionality and edge cases.',
+        'Visual regression testing ensures rendering consistency across different diagram configurations.',
+      ],
+      steps: [
+        'Verify plugin loads without errors',
+        'Test visual enhancements render correctly',
+        'Confirm event handlers respond appropriately',
+        'Validate cleanup on diagram clear',
+        'Check performance with large diagrams',
+      ],
+    },
+  },
   whatILearned: [
     'BPMN.js architecture: Deep understanding of diagram-js rendering pipeline, EventBus patterns, and modeler lifecycle from import through editing to export.',
     'SVG manipulation mastery: Direct attribute updates, path generation with Bézier curves, namespace handling, and performance considerations for complex diagrams.',
