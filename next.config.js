@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
+const basePath = '/AA-Studio';
+
 const nextConfig = {
   reactStrictMode: true,
   output: 'export',
-  basePath: '/AA-Studio',
+  basePath: basePath,
   images: {
     unoptimized: true,
+  },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
   },
 };
 
